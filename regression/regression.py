@@ -2,7 +2,7 @@ import pandas as pd
 import pickle as pkl
 from sklearn.linear_model import LinearRegression
 import numpy as np
-
+import sys
 
 class Regression:
 
@@ -46,7 +46,7 @@ class Regression:
 
         if not df_outcome.index.contains(trade_date):
             print("No Such Trade Date In outcome.pkl.")
-            return
+            sys.exit()
 
         market_label = list(set(df_outcome['MarketValuePortfolio']))
         factor_label = list(set(df_outcome['FactorPortfolio']))
@@ -85,7 +85,7 @@ class Regression:
         df_return = self.reset_index(self.df_return, index_name="trade_date")
         if not df_return.index.contains(trade_date):
             print("No Such Trade Date In dailyReturn.pkl.")
-            return
+            sys.exit()
 
         df_pnl = df_return[symbol_list].loc[trade_date]
         return df_pnl
@@ -94,7 +94,7 @@ class Regression:
         df_market_value = self.reset_index(self.df_market_value, index_name="trade_date")
         if not df_market_value.index.contains(trade_date):
             print("No Such Trade Date In marketValueMatrix.pkl.")
-            return
+            sys.exit()
 
         df_market_value = df_market_value[symbol_list].loc[trade_date]
         return df_market_value
@@ -117,7 +117,7 @@ class Regression:
             df_x = pd.concat([sr_expos, df_market_label], axis=1)
             df_y = sr_pnl
             df_weight = df_market_value**(-0.5)
-            df_weight = df_weight.fillna(0) #NaN值被替代为0
+            df_weight = df_weight.fillna(0) # NaN值被替代为0
 
             # Regression
             regre_model = LinearRegression()
