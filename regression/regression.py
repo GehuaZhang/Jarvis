@@ -90,7 +90,7 @@ class Regression:
         df_pnl = df_return[symbol_list].loc[trade_date]
         return df_pnl
 
-    def weight_fither(self, trade_date, symbol_list):
+    def weight_filter(self, trade_date, symbol_list):
         df_market_value = self.reset_index(self.df_market_value, index_name="trade_date")
         if not df_market_value.index.contains(trade_date):
             print("No Such Trade Date In marketValueMatrix.pkl.")
@@ -112,7 +112,7 @@ class Regression:
             sr_pnl = self.pnl_filter(date_temp, symbol_list=avail_symbol)                 # StockNumber x 1
             sr_expos = df_expos_T[date_temp]                                              # StockNumber x 1
             df_market_label = self.market_filter(date_temp, symbol_list=avail_symbol)     # StockNumber x MarketIndexNumber
-            df_market_value = self.weight_fither(date_temp, symbol_list=avail_symbol)     # StockNumber x 1
+            df_market_value = self.weight_filter(date_temp, symbol_list=avail_symbol)     # StockNumber x 1
 
             df_x = pd.concat([sr_expos, df_market_label], axis=1)
             df_y = sr_pnl
