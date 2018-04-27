@@ -4,6 +4,7 @@ from sklearn.linear_model import LinearRegression
 import numpy as np
 import sys
 
+
 class Regression:
 
     def __init__(self):
@@ -125,6 +126,7 @@ class Regression:
 
             df_model["model_coef"].loc[date_temp] = [regre_model.coef_.tolist()]
             df_model["intercept"].loc[date_temp] = [regre_model.intercept_.tolist()]
+
 
         return df_model
 
