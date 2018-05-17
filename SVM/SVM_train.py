@@ -105,7 +105,6 @@ class SVM_train:
     def svm(self):
         train_feature, test_feature, train_label, test_label = self.split_data()
 
-
         #  decision_function_shape "One VS One" "One VS Rest"
         #  cache_size 内存调用大小 1000是指1000mb, 默认200
         #  更多参数说明 http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
@@ -118,7 +117,5 @@ class SVM_train:
 
 pd.options.mode.chained_assignment = None
 a = SVM_train()
-
 b = a.svm()
-
 print(b)
