@@ -102,20 +102,32 @@ class SVM_train:
         train_feature, test_feature, train_label, test_label = train_test_split(arr_feature, arr_label, test_size=test_percentage, random_state=0)
         return train_feature, test_feature, train_label, test_label
 
-    def svm(self):
+    def svm_train(self):
         train_feature, test_feature, train_label, test_label = self.split_data()
 
         #  decision_function_shape "One VS One" "One VS Rest"
         #  cache_size 内存调用大小 1000是指1000mb, 默认200
         #  更多参数说明 http://scikit-learn.org/stable/modules/generated/sklearn.svm.SVC.html
-        clf = svm.SVC(C=0.8, kernel='rbf', gamma="auto", decision_function_shape='ovr', cache_size=1000)
+        clf = svm.SVC(C=0.8, kernel='rbf', gamma="auto", decision_function_shape='ovr', cache_size=5000)
         clf.fit(train_feature, train_label)
-        result = clf.predict(test_feature)
-        return result
+        score = clf.score(test_feature, test_label)
+        print(score)
+        return clf
 
 
+    #  储存模型
+    def save_model(self):
+        return
+
+    #  导入上次模型
+    def load_model(self):
+        return
+
+    #  通过导入的模型进行分类
+    def svm_load(self):
+        return
 
 pd.options.mode.chained_assignment = None
 a = SVM_train()
-b = a.svm()
+b = a.svm_train()
 print(b)
