@@ -2,8 +2,11 @@ import pandas as pd
 import pickle as pkl
 import numpy as np
 import os
+import time
 from sklearn.model_selection import train_test_split
+from sklearn.externals import joblib
 from sklearn import svm
+
 
 
 class SVM_train:
@@ -111,17 +114,26 @@ class SVM_train:
         clf = svm.SVC(C=0.8, kernel='rbf', gamma="auto", decision_function_shape='ovr', cache_size=5000)
         clf.fit(train_feature, train_label)
         score = clf.score(test_feature, test_label)
-        print(score)
-        return clf
+        print("Prediction Score: " + str(score))
+        self.save_model(model=clf)
+        print("Successfully Saved! ")
+        return
 
 
     #  储存模型
-    def save_model(self):
+    #  命名方式 SVM2018051523.pkl: 2018年5月15日23点 没保存分钟数
+    def save_model(self, model, file_name="SVM", directory="../SVM/SVM_model/"):
+        local_time = time.strftime('%Y%m%d%H', time.localtime(time.time()))
+        file_path = directory+file_name+local_time+".pkl"
+        joblib.dump(model, file_path)
+        print("Model Saved to: "+directory)
+        print("Name: "+file_path)
         return
 
     #  导入上次模型
-    def load_model(self):
-        return
+    def load_model(self, model_name, directory="../SVM/SVM_model/"):
+        clf = joblib.load(model_name)
+        return clf
 
     #  通过导入的模型进行分类
     def svm_load(self):
